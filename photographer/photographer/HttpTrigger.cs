@@ -21,7 +21,7 @@ namespace photographer
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             string email = data?.CustomerEmail;
             string photoWidth = data?.RequiredWidth;
-            string photoHeight= data?.photoHeight;
+            string photoHeight= data?.RequiredHeight;
             string photoName = data?.FileName;
 
             if (data == null || email == null || photoWidth == null || photoHeight == null ||  photoName == null)
