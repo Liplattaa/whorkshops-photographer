@@ -13,7 +13,7 @@ namespace photographer
     {
         [FunctionName("HttpTrigger")]
         public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "order")]HttpRequest req,
-            [Queue("demomessages", Connection = "queueConn")] ICollector<string> outputMessage, TraceWriter log)
+            TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
 
@@ -24,10 +24,10 @@ namespace photographer
             string photoHeight= data?.RequiredHeight;
             string photoName = data?.FileName;
 
-            //if (data == null || email == null || photoWidth == null || photoHeight == null ||  photoName == null)
-            //{
-              //  return new BadRequestObjectResult("Please pass a name on the query string or in the request body");
-            //}
+            if (data == null || email == null || photoWidth == null || photoHeight == null ||  photoName == null)
+            {
+                return new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            }
 
             return (ActionResult)new OkObjectResult("OK");
           
