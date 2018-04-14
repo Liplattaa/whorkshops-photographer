@@ -12,22 +12,26 @@ namespace photographer
     public static class HttpTrigger
     {
         [FunctionName("HttpTrigger")]
-        public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "order")]HttpRequest req, TraceWriter log)
+        public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "order")]HttpRequest req,
+            [Queue("demomessages", Connection = "queueConn")] ICollector<string> outputMessage, TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
-
             string requestBody = new StreamReader(req.Body).ReadToEnd();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-            string email = data.email;
-            string photoSize = data.photoSize;
-            string photoName = data.photoName;
+            string name = data?.name;
+            string email = data?.email;
+            string photoWidth = data?.photoWidth;
+            string photoHeight= data?.photoHeight;
+            string photoName = data?.photoName;
 
-            return name != null
-                ? (ActionResult)new OkObjectResult($"Hello, {name}")
-                : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            if (data == null || name == null || email == null || photoWidth == null || photoHeight == null ||  photoName == null)
+            {
+                return new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            }
+
+            return (ActionResult)new OkObjectResult($"Hello, {name}");
+          
         }
     }
 }
