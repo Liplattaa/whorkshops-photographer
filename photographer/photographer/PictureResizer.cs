@@ -17,7 +17,7 @@ namespace FaceSender
     {
         [FunctionName("PictureResizer")]
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequest req,
-            [Blob("photos", FileAccess.Read, Connection = "StorageConnection")]CloudBlobContainer photosContainer,
+            [Blob("photographer-blob", FileAccess.Read, Connection = "StorageConnection")]CloudBlobContainer photosContainer,
             [Blob("doneorders/{rand-guid}", FileAccess.ReadWrite, Connection = "StorageConnection")]ICloudBlob resizedPhotoCloudBlob,
             TraceWriter log)
         {
