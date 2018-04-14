@@ -41,7 +41,6 @@ namespace photographer
     {
         public string CustomerEmail { get; set; }
         public string FileName { get; set; }
-        public int RequiredHeight { get; set; }
-        public int RequiredWidth { get; set; }
+        public string Resolutions { get; set; }
     }
 }
