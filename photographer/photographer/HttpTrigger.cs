@@ -19,18 +19,17 @@ namespace photographer
 
             string requestBody = new StreamReader(req.Body).ReadToEnd();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            string name = data?.name;
-            string email = data?.email;
-            string photoWidth = data?.photoWidth;
+            string email = data?.CustomerEmail;
+            string photoWidth = data?.RequiredWidth;
             string photoHeight= data?.photoHeight;
-            string photoName = data?.photoName;
+            string photoName = data?.FileName;
 
-            if (data == null || name == null || email == null || photoWidth == null || photoHeight == null ||  photoName == null)
+            if (data == null || email == null || photoWidth == null || photoHeight == null ||  photoName == null)
             {
                 return new BadRequestObjectResult("Please pass a name on the query string or in the request body");
             }
 
-            return (ActionResult)new OkObjectResult($"Hello, {name}");
+            return (ActionResult)new OkObjectResult("OK");
           
         }
     }
