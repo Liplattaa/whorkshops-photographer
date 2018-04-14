@@ -22,7 +22,7 @@ namespace FaceSender
                 return new BadRequestResult();
 
             var photoBlob = await photosContainer.GetBlobReferenceFromServerAsync(fileName);
-            var photoUri = GetBlobSasUri(photoBlob);
+            var photoUri = await GetBlobSasUri(photoBlob);
             return new JsonResult(new { PhotoUri = photoUri });
         }
 
